@@ -1,21 +1,37 @@
-respuestas_dic={
-    'A': 'EL VIENTO',
-    'B': 'LAS HORAS DE UN RELOJ',
-    'C': 'EL MAPA'
-}
-print("Son doce señoras con medias, pero sin zapatos. ¿De quiénes se trata?")
-for clave in respuestas_dic :
-        respuesta = respuestas_dic.get(clave)
-        print("La respuesta {} es {}".format(clave, respuesta))
+list_dic=[
+        {
+                'key': 'Son doce señoras con medias, pero sin zapatos. ¿De quiénes se trata?',
+                'answ': [{'A': 'EL VIENTO'}, {'B': 'EL MAPA'}, {'C': 'LAS HORAS DE UN RELOJ'}],
+                'correct': 'C'
+        },
+        {
+                'key': 'Puede silbar sin labios y correr sin pies. Además, te pega en la espalda sin que lo puedas ver.',
+                'answ': [{'A': 'EL VIENTO'}, {'B': 'EL MAPA'}, {'C': 'LAS HORAS DE UN RELOJ'}],
+                'correct': 'A'
+        },
+        {
+                'key': '¿Dónde hay ríos sin agua, ciudades sin casas y bosques sin árboles?',
+                'answ': [{'A': 'EL VIENTO'}, {'B': 'EL MAPA'}, {'C': 'LAS HORAS DE UN RELOJ'}],
+                'correct': 'B'
+        }
+]
+i = 0
+score = 0
+for clave in list_dic:
+        clave = list_dic[i]['key']
+        respuestas = list_dic[i]['answ']
+        correcta = list_dic[i]['correct']
+        print("Adivinanza: {} \nRESPUESTAS: {}".format(clave, respuestas))
+        opcion = input('Tu respuesta es: ').upper()
+        
+        while (opcion != 'A') & (opcion != 'B') & (opcion != 'C'):
+                print("Tu respuesta. Debe ser A, B o C")
+                opcion = input('Tu respuesta es: ').upper()
+        
+        if opcion == list_dic[i]['correct'] :
+                score+=10
+        else:
+                score+=5
+        i+=1
 
-opcion = input('Tu respuesta es: ')
-opM = opcion.upper()
-while (opM != 'A') & (opM != 'B') & (opM != 'C'):
-        print("Tu respuesta. Debe ser A, B o C")
-        opcion = input('Tu respuesta es: ')
-        opM = opcion.upper()
-if opM == 'A' or opM == 'C':
-        print ("Respuesta Fallida.")
-else:
-        print ("Acertaste!!.")
-
+print("La puntuación total es de: {}".format(score))
