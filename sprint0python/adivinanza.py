@@ -1,3 +1,4 @@
+import random
 list_dic=[
         {
                 'key': 'Son doce señoras con medias, pero sin zapatos. ¿De quiénes se trata?',
@@ -17,21 +18,32 @@ list_dic=[
 ]
 i = 0
 score = 0
-for clave in list_dic:
-        clave = list_dic[i]['key']
-        respuestas = list_dic[i]['answ']
-        correcta = list_dic[i]['correct']
-        print("Adivinanza: {} \nRESPUESTAS: {}".format(clave, respuestas))
-        opcion = input('Tu respuesta es: ').upper()
-        
-        while (opcion != 'A') & (opcion != 'B') & (opcion != 'C'):
+adiv1=random.sample(list_dic, 1)[0]['key']
+adiv2=random.sample(list_dic, 1)[0]['key']
+while adiv1 == adiv2:
+        adiv2=random.sample(list_dic, 1)[0]['key']
+
+for j in list_dic:
+        if adiv1 == j['key']:
+                break
+for z in list_dic:
+        if adiv2 == z['key']:
+                break
+for i in range(2):
+        if i == 0:
+                x = j
+        else:
+                x = z
+        print("Adivinanza{}: {} \nRESPUESTAS: {}".format(i+1,x['key'],x['answ'] ))
+        option = input('Tu respuesta es: ').upper()
+
+        while (option != 'A') & (option != 'B') & (option != 'C'):
                 print("Tu respuesta. Debe ser A, B o C")
-                opcion = input('Tu respuesta es: ').upper()
-        
-        if opcion == list_dic[i]['correct'] :
+                option = input('Tu respuesta es: ').upper()
+
+        if option == x['correct'] :
                 score+=10
         else:
                 score-=5
-        i+=1
 
 print("La puntuación total es de: {}".format(score))
