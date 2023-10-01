@@ -1,9 +1,5 @@
 import random
-words_dict={
-        'easy' : ['casa','agua','azul'],
-        'normal' : ['garaje','cabeza','guardia'],
-        'hard' : ['curiosidad','paracaidas','coagulacion']
-    }
+from random import choice
 win = True
 while win:
     mode = ''
@@ -23,11 +19,18 @@ while win:
     elif diff == 3:
         mode = 'hard'
 
+    with open("palabras.txt", "r") as r:
+        lines = r.read().splitlines()
+        valid_words = []
+
+        for i in range(len(lines)):
+            if lines[i] == mode:
+                valid_words.extend(lines[i+1:i+4])
+        if valid_words:
+            word = random.choice(valid_words)
     error = 0
     triedlett=[] 
     wordT = ''
-    word = random.choice(words_dict[mode])
-    print(word)
     for i in range(len(word)):
         wordT=wordT+'_'
     print('-------------------------------------->  '+wordT)
