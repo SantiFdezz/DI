@@ -13,11 +13,11 @@ while win:
         diff = int(input('Introduce número de dificultad (1/2/3): '))
 
     if diff == 1:
-        mode = 'easy'
+        mode = 'facil'
     elif diff == 2:
         mode = 'normal'
     elif diff == 3:
-        mode = 'hard'
+        mode = 'dificil'
 
     with open("palabras.txt", "r") as r:
         lines = r.read().splitlines()
