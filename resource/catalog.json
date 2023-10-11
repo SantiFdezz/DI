@@ -1,0 +1,27 @@
+[
+    {
+        "name" : "León",
+        "description" : "El león es el rey de la selva.",
+        "image_url" : "https://raw.githubusercontent.com/SantiFdezz/DI/main/resource/lion.jpg"
+    },
+    {
+        "name" : "Ardilla",
+        "description" : "La ardilla es un roedor saltarín.",
+        "image_url" : "https://raw.githubusercontent.com/SantiFdezz/DI/main/resource/squirrel.jpg"
+    },
+    {
+        "name" : "Panda",
+        "description" : "El panda es un oso de peluche.",
+        "image_url" : "https://raw.githubusercontent.com/SantiFdezz/DI/main/resource/panda.jpg"
+    },
+    {
+        "name" : "Mapache",
+        "description" : "El mapache es nocturno y astuto.",
+        "image_url" : "https://raw.githubusercontent.com/SantiFdezz/DI/main/resource/racoon.jpg"
+    },
+    {
+        "name" : "Tigre",
+        "description" : "El tigre es un depredador poderoso.",
+        "image_url" : "https://raw.githubusercontent.com/SantiFdezz/DI/main/resource/tiger.jpg"
+    }
+]
