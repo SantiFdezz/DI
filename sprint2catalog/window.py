@@ -2,23 +2,31 @@ from tkinter import ttk, messagebox
 import tkinter as tk
 from cell import Cell
 from detail_window import showDetail
+from PIL import Image, ImageTk
+from io import BytesIO
+import threading
+import requests
 
 class MainWindow:
-    ## def on_button_clicked(self, cell):
-    ##    message = "Has hecho click en el "+cell.title
-    ##    messagebox.showinfo("Informacion", message)
-    ##    self.showDetail()## enviamos el constructor con los datos a enviar
-    def __init__(self,root):
+    cells = []
+    def __init__(self,root, json_data):
         self.root = root
         root.title("Animales")
-        self.cells = [ ##celdas con datos
-            Cell("León", "C:\\msys64\\home\\Fdezz1t0\\DI\\sprint1tkinter\\catalog\\data\\unedited\\lion.jpg", "El león es el rey de la selva."),
-            Cell("Ardilla", "C:\\msys64\\home\\Fdezz1t0\\DI\\sprint1tkinter\\catalog\\data\\unedited\\squirrel.jpg", "La ardilla es un roedor saltarín."),
-            Cell("Panda", "C:\\msys64\\home\\Fdezz1t0\\DI\\sprint1tkinter\\catalog\\data\\unedited\\panda.jpg", "El panda es un oso de peluche."),
-            Cell("Mapache", "C:\\msys64\\home\\Fdezz1t0\\DI\\sprint1tkinter\\catalog\\data\\unedited\\racoon.jpg", "El mapache es nocturno y astuto."),
-            Cell("Tigre", "C:\\msys64\\home\\Fdezz1t0\\DI\\sprint1tkinter\\catalog\\data\\unedited\\tiger.jpg", "El tigre es un depredador poderoso.")
-        ]
+        for  animal in json_data:
+            name = animal.get("name")
+            description = animal.get("description")
+            image_url = animal.get("image_url")
+            self.thread = threading.Thread(target=self.load_image, args =(name,image_url, description)) # mandamos a otro hilo la ejecución de convertir de la url a imagen dandole el target de la funcion y los argumentos que le enviamos.
+            self.thread.start()
+
         for i, cell in enumerate(self.cells):
-            label = ttk.Label(root, image=cell.image_tk, text=cell.title, compound= tk.BOTTOM) ## Imagen y label title
+            label = ttk.Label(self.root, image=cell.img, text=cell.title, compound= tk.BOTTOM) ## Imagen y label title
             label.grid(row=0,column=i)
-            label.bind("<Button-1>",lambda event, celda = cell: showDetail(celda)) ## manda a on_button para abrir detail_winwow
+            ##label.bind("<Button-1>",lambda event, celda = cell: showDetail(celda)) 
+
+    def load_image(self, name, url, desc):
+        response = requests.get(url)
+        img_data = Image.open(BytesIO(response.content))
+        img = ImageTk.PhotoImage(img_data)
+        cell = Cell(name, img, desc)
+        self.cells.append(cell)

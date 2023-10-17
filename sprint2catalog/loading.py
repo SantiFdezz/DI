@@ -34,10 +34,20 @@ class Loading:
     
     def update_progress_circle(self):
         if self.progress < 100:
-            self.progress+=10
+            self.progress+=14.20
         else:
             self.progress=0
         
         self.draw_progress_circle(self.progress)
-        self.root.after(200, self.update_progress_circle)#aqui definimos el tiempo entre que se ejecuta el metodo update.
+        self.root.after(100, self.update_progress_circle)#aqui definimos el tiempo entre que se ejecuta el metodo update.
     
+    def fetch_json_data(self):
+        response = requests.get("https://raw.githubusercontent.com/SantiFdezz/DI/main/resource/catalog.json") #cogemos el json de el githib
+        if response.status_code == 200:
+            json_data = response.json()
+            launch_main_window(json_data)
+            
+def launch_main_window(json_data):
+    root = tk.Tk()
+    app = MainWindow(root, json_data)
+    root.mainloop()
