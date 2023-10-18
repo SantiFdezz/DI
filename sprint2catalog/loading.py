@@ -5,6 +5,8 @@ import requests
 
 class Loading:
     def __init__(self, root):
+        self.finished = False;
+        self.json_data = []
         self.root = root;
         self.root.title("CARGANDO...")
         self.root.geometry("170x120") # Esto crea el tamaño por defecto de la ventana
@@ -23,6 +25,9 @@ class Loading:
 
         self.thread = threading.Thread(target=self.fetch_json_data) #movemos el progress var a otro hilo que no sea el principal
         self.thread.start()
+        if self.thread.is_alive():
+            self.check_Thread()
+
 
 
 
@@ -44,9 +49,15 @@ class Loading:
     def fetch_json_data(self):
         response = requests.get("https://raw.githubusercontent.com/SantiFdezz/DI/main/resource/catalog.json") #cogemos el json de el githib
         if response.status_code == 200:
-            json_data = response.json()
-            launch_main_window(json_data)
-            
+            self.json_data = response.json()
+            self.finished = True
+    def check_Thread(self):
+        if self.finished:
+            self.root.destroy()
+            launch_main_window(self.json_data)
+        else:
+            self.root.after(100, self.check_Thread)
+
 def launch_main_window(json_data):
     root = tk.Tk()
     app = MainWindow(root, json_data)
