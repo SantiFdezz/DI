@@ -10,8 +10,9 @@ class MainWindow:
         root.title("Animales")
         x = (self.root.winfo_screenwidth() - self.root.winfo_reqwidth()) / 2 ##screenwidth devuelve el ancho de la pantalla,  y reqwidth nos devuelve la anchura en pixels de la ventana.
         y = (self.root.winfo_screenheight() - self.root.winfo_reqheight()) / 2
+        print(self.root.winfo_reqwidth())
         self.root.geometry(f"+{int(x)}+{int(y)}") # Esto crea el tamaño por defecto de la ventana
-        #self.root.resizable(False, False) #No le dejamos redimensionar x ni y
+        self.root.resizable(False, False) #No le dejamos redimensionar x ni y
         barras_menu = tk.Menu()
         menu_Ayuda = tk.Menu(barras_menu, tearoff=False)## creamos el primer menú
         menu_Ayuda.add_command(label="Acerca de",command=self.show_info) ##añadimos al menu Ayuda la entrada Acerca De
@@ -24,10 +25,32 @@ class MainWindow:
             cell = Cell(name, image_url, description) ##inicializamos la celda
             self.cells.append(cell) ##añadimos la nueva celda a la lista d celdas
 
-        for i, cell in enumerate(self.cells): #Enumeramos las celdas
-            label = ttk.Label(self.root, image=cell.image_tk, text=cell.title, compound= tk.BOTTOM) ## Imagen y label title
-            label.grid(row=i,column=0)
-            label.bind("<Button-1>",lambda event, cell = cell: showDetail(cell)) 
+        self.canvas = tk.Canvas(self.root)
+        self.scrollbar = tk.Scrollbar(self.root, orient="vertical", command =self.canvas.yview)
+        self.scrollable_frame = tk.Frame(self.canvas)
+        
+        self.scrollable_frame.bind(
+            "<Configure>",
+            lambda e: self.canvas.configure(
+                scrollregion=self.canvas.bbox("all")
+            )
+        )
+        self.canvas.create_window((0,0), window=self.scrollable_frame, anchor= "nw")
+        self.canvas.configure(yscrollcommand= self.scrollbar.set)
+        for i, cell in enumerate(self.cells):
+            self.add_items(cell, i)
+
+        self.canvas.grid(row=0, column=0, sticky="nsew")
+        self.scrollbar.grid(row=0, column=1, sticky="ns")
+        self.root.grid_rowconfigure(0, weight=1)
+        self.root.grid_columnconfigure(0, weight=1)
+
+    def add_items(self, cell, i):
+        frame = ttk.Frame(self.scrollable_frame)
+        frame.pack(pady=10,  padx=140)
+        label = ttk.Label(frame, image=cell.image_tk, text=cell.title, compound= tk.BOTTOM) ## Imagen y label title
+        label.grid(row=i,column=0, padx=5, pady=5)
+        label.bind("<Button-1>",lambda event, cell = cell: showDetail(cell)) 
     
     def show_info(self):
         messagebox.showinfo("Acerca De ", "Desarollador: Fdezz1t0")
