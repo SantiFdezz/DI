@@ -25,21 +25,25 @@ class MainWindow:
             cell = Cell(name, image_url, description) ##inicializamos la celda
             self.cells.append(cell) ##añadimos la nueva celda a la lista d celdas
 
-        self.canvas = tk.Canvas(self.root)
-        self.scrollbar = tk.Scrollbar(self.root, orient="vertical", command =self.canvas.yview)
-        self.scrollable_frame = tk.Frame(self.canvas)
+        self.canvas = tk.Canvas(self.root)        # Creación del Canvas
+        self.scrollbar = tk.Scrollbar(self.root, orient="vertical", command =self.canvas.yview)        # Creación del Scrollbar
         
+        # Creamos el frame que servira de scroll
+        self.scrollable_frame = tk.Frame(self.canvas)
         self.scrollable_frame.bind(
             "<Configure>",
             lambda e: self.canvas.configure(
                 scrollregion=self.canvas.bbox("all")
             )
         )
+        #Creamos la pagin en el canvas y configuramos el scrollbar en el propio canvas
         self.canvas.create_window((0,0), window=self.scrollable_frame, anchor= "nw")
         self.canvas.configure(yscrollcommand= self.scrollbar.set)
+
         for i, cell in enumerate(self.cells):
             self.add_items(cell, i)
 
+        #Config de posicion de la Scrollbar en la ventana
         self.canvas.grid(row=0, column=0, sticky="nsew")
         self.scrollbar.grid(row=0, column=1, sticky="ns")
         self.root.grid_rowconfigure(0, weight=1)
