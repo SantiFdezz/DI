@@ -9,7 +9,9 @@ class Loading:
         self.json_data = []
         self.root = root;
         self.root.title("CARGANDO...")
-        self.root.geometry("170x120") # Esto crea el tamaño por defecto de la ventana
+        x = (self.root.winfo_screenwidth() - self.root.winfo_reqwidth()) / 2 ##screenwidth devuelve el ancho de la pantalla,  y reqwidth nos devuelve la anchura en pixels de la ventana.
+        y = (self.root.winfo_screenheight() - self.root.winfo_reqheight()) / 2
+        self.root.geometry(f"+{int(x)}+{int(y)}") # Esto crea el tamaño por defecto de la ventana
         self.root.resizable(False, False) #No le dejamos redimensionar x ni y
         self.label = tk.Label(self.root, text="Cargando datos...", font=("arial", 14))
         self.label.pack(side=tk.TOP, pady=10)

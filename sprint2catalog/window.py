@@ -8,7 +8,9 @@ class MainWindow:
     def __init__(self,root, json_data):
         self.root = root
         root.title("Animales")
-        #self.root.geometry("170x120") # Esto crea el tamaño por defecto de la ventana
+        x = (self.root.winfo_screenwidth() - self.root.winfo_reqwidth()) / 2 ##screenwidth devuelve el ancho de la pantalla,  y reqwidth nos devuelve la anchura en pixels de la ventana.
+        y = (self.root.winfo_screenheight() - self.root.winfo_reqheight()) / 2
+        self.root.geometry(f"+{int(x)}+{int(y)}") # Esto crea el tamaño por defecto de la ventana
         #self.root.resizable(False, False) #No le dejamos redimensionar x ni y
         for  animal in json_data:
             name = animal.get("name")
