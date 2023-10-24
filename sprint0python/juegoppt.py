@@ -20,7 +20,7 @@ print('\nEl juego consiste en dictar piedra, papel o tijera pudiendo suponer lo 
 
 p1 = 0
 p2 = 0
-for i in range(6):
+for i in range(5):
     opt=input('\nElige (piedra/papel/tijera): ').lower()
     while opt not in ['piedra','tijera','papel']:
         print('[!] OPCIÓN NO VÁLIDA')
@@ -35,7 +35,6 @@ for i in range(6):
     for z in ppt_dic:
         if opt2 == z['name']:
             break
-
     if j['breaks'] == z['name']:
         p2+=1
         print('\nHa  ganado 1 punto el player 2, '+z['name']+' gana a '+j['name'])

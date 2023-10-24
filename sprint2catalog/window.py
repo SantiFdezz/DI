@@ -10,7 +10,6 @@ class MainWindow:
         root.title("Animales")
         x = (self.root.winfo_screenwidth() - self.root.winfo_reqwidth()) / 2 ##screenwidth devuelve el ancho de la pantalla,  y reqwidth nos devuelve la anchura en pixels de la ventana.
         y = (self.root.winfo_screenheight() - self.root.winfo_reqheight()) / 2
-        print(self.root.winfo_reqwidth())
         self.root.geometry(f"+{int(x)}+{int(y)}") # Esto crea el tamaño por defecto de la ventana
         self.root.resizable(False, False) #No le dejamos redimensionar x ni y
         barras_menu = tk.Menu()
