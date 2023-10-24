@@ -1,0 +1,5 @@
+{
+    "facil": ["Gato", "Perro", "Casa", "Mesa", "Sol", "Luna"],
+    "normal": ["Computadora", "Jirafa", "Elefante", "Teléfono", "Montaña", "Jardín"],
+    "dificil": ["Extraordinario", "Inconcebible", "Incomparable", "Revolucionario", "Sobrenatural", "Espectacular"]
+}
