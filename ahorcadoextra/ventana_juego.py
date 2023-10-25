@@ -1,57 +1,91 @@
 import tkinter as tk
-from tkinter import ttk, messagebox, Image
+from tkinter import ttk, messagebox
+from PIL import Image, ImageTk
 from io import BytesIO
 import requests
 
 
 class Game:
-    def __init__(self, game, word, mode, json_error):
+    def __init__(self, game, word, mode, json_error, root):
         self.game = game
-        self.game.title("Nivel "+mode)
-        self.game.geometry("300x300")
-        finish = False
-        while not finish:
-            wordT = ""
-            wordT = self.makePass(word, wordT)
-            error = 0
-            triedlett=[]
-            letterror = ""
-            lettcorrect = ""
-            while error < 6 and wordT!=word:
-                self.image = self.game.after(100, self.callimage(error))
-                labelimag = ttk.Label(self.game, image=self.image)
-                labelimag.grid(row=0, column=0)
-                labelword = ttk.Label(self.game, text=wordT)
-                labelword.grid(row=1, column=0)
-                labelacierto = ttk.Label(self.game, text="Aciertos: "+lettcorrect)
-                labelacierto.grid(row=1, column=1)
-                labelerror = ttk.Label(self.game, text="Errores: "+str(error))
-                labelerror.grid(row=2, column=1)
-                labelerror = ttk.Label(self.game, text="Letras erróneas: "+ letterror)
-                labelerror.grid(row=3, column=1)
-                E1 = ttk.Entry(self.game)
-                E1.grid(row=4, column=1)
-                let = ((E1.get()).lower())
-                while let == '' or len(let) > 1:
-                    messagebox.showinfo("Error", "SOLO SE PUEDE 1 CARACTER.")
-                    let = ((E1.get()).lower())
-                if let in word:
-                    for z in range(len(word)):
-                        if let == word[z]:
-                            wordT = wordT[:z] + let + wordT[z + 1:] #rellenamos la palabra secreta cambiando solo la letra cambiada en el string
-                            lettcorrect += let+", "
-                else:
-                    error+=1
-                    triedlett.append(let)
-                    for i in triedlett.size():
-                        letterror += triedlett.index(i)+", "
-    
-    def makePass(self, word, wordT):
-        for i in range(len(word)):
+        self.root = root
+        self.game.title("Dificultad: "+mode)
+        x = (self.game.winfo_screenwidth() - self.game.winfo_reqwidth()) / 2 ##screenwidth devuelve el ancho de la pantalla,  y reqwidth nos devuelve la anchura en pixels de la ventana.
+        y = (self.game.winfo_screenheight() - self.game.winfo_reqheight()) / 2
+        self.game.geometry(f"+{int(x)}+{int(y)}") # Esto crea el tamaño por defecto de la ventana y lo centra
+        self.game.geometry("300x200")
+        self.root.resizable(False,False)
+        self.word = word
+        self.wordT = self.makePass()
+        self.error = 0
+        self.errorLet=[]
+        self
+        self.lettcorrect = ""
+        self.letterror = ""
+        self.let = ''
+        self.json_error = json_error
+        self.showInterface()
+
+
+    def showInterface(self):
+        self.labelimag = ttk.Label(self.game) #inicializamos el label sin nada dentro, (en callImage se le actualza)
+        self.labelimag.grid(row=0, column=0, pady=10)
+        self.callImage()
+        labelword = ttk.Label(self.game, text=self.wordT)
+        labelword.grid(row=1, column=0, pady=10) #mostramos la palabra con guiones debajo de la imagen
+
+        labelerror = ttk.Label(self.game, text="Errores: "+str(self.error)) 
+        labelerror.grid(row=0, column=1, pady=10) #mostramos los errores
+
+        labelerror = ttk.Label(self.game, text="Intentos: "+ self.letterror)
+        labelerror.grid(row=1, column=1, pady=10) # mostramos las letras erradas probadas
+
+        E1 = ttk.Entry(self.game, width=10) # width manda el ancho de el campo
+        E1.grid(row=2, column=1, pady=10, padx=10)
+        applybutton = ttk.Button(self.game, text="Adivinar", command= lambda: self.checkLet(E1.get()))
+        applybutton.grid(row=2, column=2, pady=10)
+
+    def makePass(self):
+        wordT = ""
+        for i in range(len(self.word)):
                 wordT+='-'
         return wordT
-    def callimage(error, json_error):
-        response = requests.get(json_error[image].get(error))
-        ##image = Image.open(BytesIO(response.content))
-        image = (Image.open(BytesIO(response.content))).resize((100, 100), Image.Resampling.LANCZOS)
-        return image
+    def callImage(self):
+        image_url = self.json_error[self.error]['image']#cogemos la imagen segun el numero de errores(están en lista)
+        response = requests.get(image_url)
+        image = Image.open(BytesIO(response.content))
+        image = image.resize((100, 100), Image.Resampling.LANCZOS)#redimensionamos la imagen para que ocupe 100x100px
+        self.image = ImageTk.PhotoImage(image)
+        self.labelimag.configure(image=self.image) #añadimos al label la imagen correspondiente
+
+    def checkLet(self, let):
+        if let == '' or len(let) > 1:
+            messagebox.showinfo("CÁRACTER INVALIDO", "SOLO SE PUEDE 1 CARÁCTER.")
+            self.showInterface() #enviamos mensaje de error y lo mandamos de vuelta a enviar carácter
+        else:
+            self.let = let.lower().strip() # ponemos la letra en minuscula y quitamos los espacios
+            self.processLetter()
+
+    def processLetter(self):
+        if self.let in self.word.lower():
+            for z in range(len(self.word.lower())):
+                if self.let == self.word[z].lower():
+                    self.wordT = self.wordT[:z] + self.let + self.wordT[z + 1:] #rellenamos la palabra secreta cambiando solo la letra cambiada en el string
+        else:
+            self.error+=1
+            self.errorLet.append(self.let)
+            for i in self.errorLet:
+                if i == self.let:
+                    self.letterror = ", ".join(self.errorLet) #añadimos en string separado por comas las letras falladas 
+
+        if self.error < 6 and self.wordT!=self.word.lower():
+            self.showInterface()
+        elif self.wordT == self.word.lower():
+            messagebox.showinfo("¡Ganaste!", "¡Felicidades, has adivinado la palabra era: "+self.word+"!")
+            self.root.deiconify()  # Muestra la ventana oculta
+            self.game.destroy() #eliminamos la ventana del juego
+        else:
+            messagebox.showinfo("¡Perdiste!", "¡Lo siento, has perdido la palabra era: "+self.word+"!")
+            self.root.deiconify()  # Muestra la ventana oculta
+            self.game.destroy()
+                        

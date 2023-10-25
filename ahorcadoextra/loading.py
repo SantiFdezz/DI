@@ -49,12 +49,14 @@ class Loading:
         self.root.after(100, self.update_progress_circle)#aqui definimos el tiempo entre que se ejecuta el metodo update.
     
     def fetch_json_data(self):
-        response = requests.get("https://raw.githubusercontent.com/SantiFdezz/DI/main/resource/ahorcado/words.json")
-        response2 = requests.get("https://raw.githubusercontent.com/SantiFdezz/DI/main/resource/ahorcado/error.json") #cogemos el json de el githib
+        response = requests.get("https://raw.githubusercontent.com/SantiFdezz/DI/main/ahorcadoextra/ahorcado/words.json")
+        response2 = requests.get("https://raw.githubusercontent.com/SantiFdezz/DI/main/ahorcadoextra/ahorcado/error.json") #cogemos los json de el github
         if response.status_code == 200 and response2.status_code == 200:
             self.json_data = response.json()
             self.json_error = response2.json()
             self.finished = True
+        else:
+            print("Error al cargar los datos.")
     def check_Thread(self):
         if self.finished:
             self.root.destroy()
