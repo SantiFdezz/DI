@@ -33,7 +33,6 @@ class Game:
         self.callImage()
         labelword = ttk.Label(self.game, text=self.wordT)
         labelword.grid(row=1, column=0, pady=10) #mostramos la palabra con guiones debajo de la imagen
-
         labelerror = ttk.Label(self.game, text="Errores: "+str(self.error)) 
         labelerror.grid(row=0, column=1, pady=10) #mostramos los errores
 
@@ -44,12 +43,19 @@ class Game:
         E1.grid(row=2, column=1, pady=10, padx=10)
         applybutton = ttk.Button(self.game, text="Adivinar", command= lambda: self.checkLet(E1.get()))
         applybutton.grid(row=2, column=2, pady=10)
+        if self.wordT != self.word.lower() and self.error == 6:
+            messagebox.showinfo("¡Perdiste!", "¡Lo siento, has perdido la palabra era: "+self.word+"!")
+            self.exit()
+        elif self.wordT == self.word.lower() and self.error < 6:
+            messagebox.showinfo("¡Ganaste!", "¡Felicidades, has adivinado la palabra era: "+self.word+"!")
+            self.exit()
 
     def makePass(self):
         wordT = ""
         for i in range(len(self.word)):
-                wordT+='-'
+                wordT+='-' #por cada letra de self.word añade a wordT un -
         return wordT
+    
     def callImage(self):
         image_url = self.json_error[self.error]['image']#cogemos la imagen segun el numero de errores(están en lista)
         response = requests.get(image_url)
@@ -76,16 +82,10 @@ class Game:
             self.errorLet.append(self.let)
             for i in self.errorLet:
                 if i == self.let:
-                    self.letterror = ", ".join(self.errorLet) #añadimos en string separado por comas las letras falladas 
+                    self.letterror = ", ".join(self.errorLet) #igualamos en string separado por comas las letras falladas de el array
 
-        if self.error < 6 and self.wordT!=self.word.lower():
-            self.showInterface()
-        elif self.wordT == self.word.lower():
-            messagebox.showinfo("¡Ganaste!", "¡Felicidades, has adivinado la palabra era: "+self.word+"!")
-            self.root.deiconify()  # Muestra la ventana oculta
-            self.game.destroy() #eliminamos la ventana del juego
-        else:
-            messagebox.showinfo("¡Perdiste!", "¡Lo siento, has perdido la palabra era: "+self.word+"!")
-            self.root.deiconify()  # Muestra la ventana oculta
-            self.game.destroy()
-                        
+        self.showInterface()
+        
+    def exit(self):
+        self.root.deiconify()
+        self.game.destroy()
