@@ -18,10 +18,10 @@ public class CatalogActivity extends AppCompatActivity {
         setContentView(R.layout.activity_catalog);
         navigateButton = findViewById(R.id.navigate_button);
 
-        navigateButton.setOnClickListener(new View.OnClickListener() {
+        navigateButton.setOnClickListener(new View.OnClickListener() { //Inicializamos el button
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, DetailActivity.class);
+                Intent intent = new Intent(context, DetailActivity.class); // cuando clicke en el boton se activara DetailActivity
                 context.startActivity(intent);
             }
         });
