@@ -1,3 +1,11 @@
 <resources>
-    <string name="app_name">My Catalog</string>
+    <string name="app_name">Mi Catálogo</string>
+    <string name="navigation_drawer_open">Abrir</string>
+    <string name="navigation_drawer_close">Cerrar</string>
+    <string name="menu_about">Acerca de</string>
+    <string name="menu_activity">Actividades</string>
+    <string name="menu_catalog">Catálogo</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="about">Acerca de desarrollador: Fdezz1t0</string>
 </resources>
