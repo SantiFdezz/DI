@@ -38,5 +38,10 @@
         "name" : "Tigre",
         "description" : "El tigre es un depredador poderoso.",
         "image_url" : "https://raw.githubusercontent.com/SantiFdezz/DI/main/resource/tiger.jpg"
+    },
+    {
+        "name" : "Tigre",
+        "description" : "El tigre es un depredador poderoso.",
+        "image_url" : "https://raw.githubusercontent.com/SantiFdezz/DI/main/resource/tiger.jpg"
     }
 ]
