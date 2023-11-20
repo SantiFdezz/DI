@@ -71,7 +71,7 @@ public class Fragment1 extends Fragment {
             @Override
             public void onClick(View view) {
                 // Reemplazar con el fragmento que has clickado
-                 fragment = new Fragment2();
+                fragment = new Fragment2();
                 FragmentManager fragmentManager = requireActivity().getSupportFragmentManager(); // O getSupportFragmentManager() si no estás en una subclase de Fragment
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.fragment_container, fragment); // Reemplaza el contenido del contenedor de fragmentos con el nuevo fragmento
