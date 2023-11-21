@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -52,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
                         recyclerview.setAdapter(adapter);
                         recyclerview.setLayoutManager(new LinearLayoutManager(activity));
 
+
                     }
                 },
                 new Response.ErrorListener(){
@@ -63,4 +65,5 @@ public class MainActivity extends AppCompatActivity {
         RequestQueue cola = Volley.newRequestQueue(this);
         cola.add(request);
     }
+
 }

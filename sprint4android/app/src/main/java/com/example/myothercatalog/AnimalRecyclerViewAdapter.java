@@ -13,7 +13,11 @@ import java.util.List;
 public class AnimalRecyclerViewAdapter  extends RecyclerView.Adapter<AnimalViewHolder> {
     private List<AnimalData> allTheData;
     private Activity activity;
-
+    private OnItemClickListener onItemClickListener;
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
+    //Inicializamos la lista y la actividad
     public AnimalRecyclerViewAdapter(List<AnimalData> dataSet, Activity activity){
         this.allTheData = dataSet;
         this.activity = activity;

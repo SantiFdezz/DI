@@ -9,6 +9,7 @@ public class AnimalData {
     private String imageUrl;
     //Setteamos los datos que vamos a enseñar por cada celda
 
+    //Recogemos los datos
     public AnimalData(JSONObject json){
         try{
             this.name = json.getString("name");
