@@ -25,7 +25,7 @@ public class AnimalRecyclerViewAdapter  extends RecyclerView.Adapter<AnimalViewH
     public AnimalViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType){
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.animal_view_holder, parent, false);
-        return new AnimalViewHolder(view);
+        return new AnimalViewHolder(view, allTheData);
     }
     public void onBindViewHolder(AnimalViewHolder holder, int position){
         AnimalData dataInPositionToBeRendered = allTheData.get(position);

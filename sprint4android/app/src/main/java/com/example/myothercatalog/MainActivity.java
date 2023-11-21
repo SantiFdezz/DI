@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView recyclerview = findViewById(R.id.recycler_view);
         List<AnimalData> data = new ArrayList<>();
         Activity activity = this;
+        //Aqui inicializamos el JSON y lo parseamos recibiendo On Response y onErrorResponse
         JsonArrayRequest request = new JsonArrayRequest(
                 Request.Method.GET,
                 "https://raw.githubusercontent.com/SantiFdezz/DI/main/resource/catalog.json",
@@ -52,8 +53,6 @@ public class MainActivity extends AppCompatActivity {
                         AnimalRecyclerViewAdapter adapter = new AnimalRecyclerViewAdapter(allTheAnimals, activity);
                         recyclerview.setAdapter(adapter);
                         recyclerview.setLayoutManager(new LinearLayoutManager(activity));
-
-
                     }
                 },
                 new Response.ErrorListener(){

@@ -22,4 +22,6 @@ public class AnimalData {
     }
     public String getName(){ return name;}
     public String getImageUrl(){ return imageUrl;}
+    public String getDescription(){ return description;}
+
 }
