@@ -4,6 +4,10 @@
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
-
+    <!-- CUSTOM THEME -->
+    <style name="CustomTheme" parent="Theme.AppCompat.Light">
+        <item name="colorPrimary">#3F51B5</item>
+        <item name="colorAccent">#FF4081</item>
+    </style>
     <style name="Theme.MyOtherCatalog" parent="Base.Theme.MyOtherCatalog" />
 </resources>
