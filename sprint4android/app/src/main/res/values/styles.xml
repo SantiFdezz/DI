@@ -4,5 +4,9 @@
         <item name="android:textSize">20sp</item>
         <item name="android:textColor">#ff0000</item>
     </style>
+    <style name="CellText" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">40sp</item>
+        <item name="android:textColor">@color/purple</item>
+    </style>
 
 </resources>

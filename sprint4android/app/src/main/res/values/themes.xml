@@ -5,10 +5,17 @@
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
     <!-- CUSTOM THEME -->
-    <style name="CustomTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimary">#9C27B0</item>
-        <item name="colorAccent">#FF4081</item>
-        <item name="android:textColor">#ff0000</item>
+    <style name="HomeTheme" parent="Theme.AppCompat.Light">
+        <item name="colorPrimary">@color/purple</item>
+        <item name="colorAccent">@color/pink</item>
+        <item name="backgroundColor"></item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+    <style name="CellTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/red</item>
+        <item name="colorAccent">@color/pink</item>
+        <item name="android:text">@style/CustomText</item>
     </style>
     <style name="Theme.MyOtherCatalog" parent="Base.Theme.MyOtherCatalog" />
 </resources>
